@@ -86,9 +86,9 @@ padding:5px;
     position:fixed;
     bottom:110px;
     right:20px;
-    width:440px;
+    width:700px;
     max-width: 95%;
-    height:560px;
+    height:500px;
     max-height: calc(100vh - 150px);
     background:#fff;
     border-radius:28px;
@@ -104,7 +104,7 @@ padding:5px;
     padding:18px 20px;
     display:flex;
     align-items:center;
-    border-bottom:1px solid #E5E7EB;
+  
 }
 
 .chat-header img{
@@ -132,8 +132,9 @@ padding:5px;
 }
         .chat-body{
 flex:1;
-padding:18px;
+padding:20px;
 overflow-y:auto;
+height: 560px;
 background:#fff;
 color: #222;
 }
@@ -1239,6 +1240,28 @@ text-align:center;
 color:#cfcfcf;
 
 }
+.topic-card{
+    background:#fff;
+    border:1px solid #E5E7EB;
+    border-radius:15px;
+    padding:15px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.topic-card:hover{
+    background:#F3F4F6;
+    transform:translateY(-2px);
+}
+
+.topic-card b{
+    color:#0D47A1;
+    font-size:16px;
+}
+
+.topic-card small{
+    color:#6B7280;
+}
 </style>
 
 </head>
@@ -1599,14 +1622,9 @@ Your AI-powered assistant for managing the Partner Admin Portal efficiently and 
 
     <div style="display:flex;align-items:center;gap:10px;">
 
-        <img src="2.jpeg" style="width:50px;height:50px;border-radius:50%;">
+        <img src="2.jpeg" style="width:80px;height:80px;border-radius:50%;">
 
-        <div>
-            <h3 style="margin:0;color: #0D47A1;font-weight: 700;">GENIE AI</h3>
-            <p style="margin:0;font-size:13px;color:#6B7280;">
-                AI Partner Portal Assistant
-            </p>
-        </div>
+    
 
     </div>
 
@@ -1662,29 +1680,81 @@ function clearChat() {
 
 chatBody.innerHTML = `
 
-<div style="text-align:center;padding:15px;">
+<div style="display:flex;align-items:flex-start;gap:15px;margin-bottom:20px;">
 
-<h2 style="color:#4F46E5;">✨ Welcome to Genie AI</h2>
+<img src="genie final.jpeg"
+style="width:90px;height:90px;border-radius:50%;object-fit:cover;">
 
-<p style="color:#666;margin-top:8px;">
-Select a topic to get started.
+<div style="flex:1;">
+
+<p style="
+font-size:13px;
+letter-spacing:4px;
+color:#A0AEC0;
+margin-bottom:10px;
+font-weight:600;">
+GENIE FOR PARTNER PORTAL
 </p>
 
-<div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<div style="
+background:#F9FAFB;
+border:1px solid #E5E7EB;
+border-radius:18px;
+padding:18px;">
 
-<button onclick="selectTopic('Login Issues')" class="topic-btn">🔑 Login Issues</button>
-
-<button onclick="selectTopic('Password Reset')" class="topic-btn">🔒 Password Reset</button>
-
-<button onclick="selectTopic('Dashboard Help')" class="topic-btn">📊 Dashboard Help</button>
-
-<button onclick="selectTopic('Product Management')" class="topic-btn">📦 Product Management</button>
-
-<button onclick="selectTopic('Order Management')" class="topic-btn">🛒 Order Management</button>
-
-<button onclick="selectTopic('Customer Management')" class="topic-btn">👥 Customer Management</button>
+Hi there! I'm here to help you manage your Partner Portal.
+How can I assist you today?
 
 </div>
+
+</div>
+
+</div>
+
+<p style="
+font-size:13px;
+letter-spacing:4px;
+color:#A0AEC0;
+font-weight:600;
+margin:25px 0 15px;">
+TRY ONE OF THESE
+</p>
+
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;">
+
+<div class="topic-card" onclick="selectTopic('Login Issues')">
+<b>Login Issues</b><br>
+<small>Help me access my account</small>
+</div>
+
+<div class="topic-card" onclick="selectTopic('Dashboard Help')">
+<b>Dashboard</b><br>
+<small>Learn dashboard features</small>
+</div>
+
+<div class="topic-card" onclick="selectTopic('Product Management')">
+<b>Products</b><br>
+<small>Create and manage products</small>
+</div>
+
+<div class="topic-card" onclick="selectTopic('Order Management')">
+<b>Orders</b><br>
+<small>Track and manage orders</small>
+</div>
+
+<div class="topic-card" onclick="selectTopic('Customer Management')">
+<b>Customers</b><br>
+<small>Manage customer accounts</small>
+</div>
+
+<div class="topic-card" onclick="selectTopic('Account Settings')">
+<b>Account Settings</b><br>
+<small>Update profile & security</small>
+</div>
+
 </div>
 
 `;
@@ -1710,7 +1780,7 @@ chatBody.innerHTML += `
 <div class="typing" id="typing">
     <video autoplay loop muted playsinline
         style="width:90px;height:90px;object-fit:contain;">
-        <source src="genie ani.mp4" type="video/mp4">
+        <source src="Genie animation.mp4" type="video/mp4">
     </video>
 
     <div class="dots">
@@ -1728,7 +1798,8 @@ chatBody.scrollTop = chatBody.scrollHeight;
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                chatInput: message
+                chatInput: message,
+                sessionId: "genie-user-1"
             })
         });
       document.getElementById("typing")?.remove();
@@ -1796,8 +1867,18 @@ input.addEventListener("keypress",function(e){
 clearChat();
 function selectTopic(topic){
 
-input.value = topic;
+    const topics = {
+        "Login Issues": "I have a login issue.",
+        "Dashboard Help": "I need help with the dashboard.",
+        "Product Management": "I want to manage my products.",
+        "Order Management": "I need help with my orders.",
+        "Customer Management": "I need help with customer management.",
+        "Account Settings": "I need help with my account settings."
+    };
 
+    input.value = topics[topic] || topic;
+
+    input.focus();
 }
 </script>
 
